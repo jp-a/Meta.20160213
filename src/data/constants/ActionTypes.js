@@ -1,0 +1,10 @@
+export const ERROR = 'ERROR';
+export const ADD_NODE = 'ADD_NODE';
+export const INSERT_NODE = 'INSERT_NODE';
+export const DELETE_NODE = 'DELETE_NODE';
+export const EDIT_NODE = 'EDIT_NODE';
+export const UPDATE_NODE = 'UPDATE_NODE';
+export const COMPLETE_NODE = 'COMPLETE_NODE';
+export const COMPLETE_ALL = 'COMPLETE_ALL';
+export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
+ export const SET_SYNC_STATE = 'SET_SYNC_STATE';
