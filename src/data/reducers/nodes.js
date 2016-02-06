@@ -17,6 +17,7 @@ export default function nodes( state = initialState, action ) {
             return [
                 {
                     _id: id(),
+                    ct: new Date(),
                     completed: false,
                     text: action.text
                 },

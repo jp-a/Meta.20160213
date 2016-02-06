@@ -45,12 +45,20 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "classnames": "^2.2.3",
+    "flexboxgrid": "^6.3.0",
+    "material-ui": "^0.14.4",
     "pouch-redux-middleware": "^0.1.0",
     "pouch-websocket-sync": "^0.1.7",
     "pouchdb": "^5.2.0",
     "react": "^0.14.0",
+    "react-absolute-grid": "^2.0.1",
     "react-dom": "^0.14.0",
+    "react-flexbox-grid": "^0.9.4",
+    "react-flexgrid": "^0.7.0",
     "react-redux": "^4.0.6",
+    "react-tap-event-plugin": "^0.2.2",
     "redux": "^3.0.6"
   }
 }

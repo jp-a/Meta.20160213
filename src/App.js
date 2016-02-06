@@ -1,8 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 import DevTools from './containers/DevTools';
+import TableView from './containers/TableView';
+import ListView from './containers/ListView';
+import GridView from './containers/GridView';
 
 import * as NodesActions from './data/actions/nodes'
 
@@ -17,11 +26,11 @@ class Node extends Component {
 
         return (
             <li>
-                <button onClick={ this.handleClick.bind( this ) }> x</button>
-                &nbsp;
-                { ( 1001 + index ).toString().substring( 1 ) } : { node.text } ( { node._id } ) ( { node._rev } )
-                &nbsp;
-
+                <span>{ ( 1001 + index ).toString().substring( 1 ) }</span>
+                <span>{ node.text }</span>
+                <span>{ node._id }</span>
+                <span>{ node._rev }</span>
+                <span><button onClick={ this.handleClick.bind( this ) }> x</button></span>
             </li>
         )
     }
@@ -48,19 +57,26 @@ class App extends Component {
 
         return (
             <div>
-                <h1>Hello, world!!!</h1>
+                <h1>Meta</h1>
                 <h2>{ syncState.text }</h2>
-                <button onClick={ this.handleClick.bind( this ) }>Add</button>
+                <RaisedButton primary={ true } onClick={ this.handleClick.bind( this ) } label='Add'/>
                 &nbsp;
-                <button onClick={ this.handlePurge.bind( this ) }>Purge</button>
+                <FlatButton onClick={ this.handlePurge.bind( this ) }>Purge</FlatButton>
 
+                { /*< TableView/> */ }
+
+                 { /* <GridView /> */ }
+
+                <ListView />
+
+                { /*
                 <ul>
                     { nodes.map( ( node, index ) =>
                         <Node key={ node._id } index={ index } node={ node } { ...actions }/>
                     ) }
-                </ul>
+                </ul> */ }
 
-                <DevTools />
+                <DevTools/>
             </div>
         );
     }
