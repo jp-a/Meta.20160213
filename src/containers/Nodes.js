@@ -30,8 +30,6 @@ import AlloyEditor from 'alloyeditor';
 
 import * as NodesActions from '../data/actions/nodes'
 
-import Meta from './Meta';
-
 const iconButtonElement = (
     <IconButton
         touch={ true }

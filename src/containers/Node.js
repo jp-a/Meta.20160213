@@ -45,11 +45,11 @@ export default class Node extends Component {
                 { node &&
                 <Card>
                     <CardMedia
-                        overlay={<CardTitle title={ node._id } />}
+                        overlay={<CardTitle title={ node.text } />}
                     >
                         <img src="http://placehold.it/50x50.jpg/000"/>
                     </CardMedia>
-                    <CardTitle title={ node._id } subtitle={ node._rev }/>
+                    <CardTitle title={ node.text } subtitle={ node._rev }/>
                     <CardText>
                         { node.text }
                     </CardText>
