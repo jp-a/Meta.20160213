@@ -3,9 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { createHistory, useBasename } from 'history';
-import { Router, History, Route, IndexRoute, Link } from 'react-router';
+import { browserHistory, Router, History, Route, IndexRoute, Link } from 'react-router';
 
-import View from 'react-flexbox';
 
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
@@ -31,56 +30,7 @@ import AlloyEditor from 'alloyeditor';
 
 import * as NodesActions from '../data/actions/nodes'
 
-const history = useBasename( createHistory )( {
-    basename: '/master-detail'
-} );
-
-class Node extends Component {
-/*
-    componentDidMount() {
-        this._editor = AlloyEditor.editable( 'content', this.props.alloyEditorConfig );
-    }
-
-    componentWillUnmount() {
-      this._editor.destroy();
-    }
-
-*/
-    handleClick() {
-        console.log( 'handleClick(', this.props.node._id, ')' );
-    }
-
-    handleDelete() {
-        console.log( 'handleDelete(', this.props.node._id, ')' );
-        this.props.deleteNode( this.props.node._id );
-    }
-
-    render() {
-        const { node, index } = this.props;
-
-        return (
-            <div style={ {  padding: '0px 50px 50px' } }>
-                <Card>
-                    <CardMedia
-                        overlay={<CardTitle title={ node._id } />}
-                    >
-                        <img src="http://lorempixel.com/600/337/nature/"/>
-                    </CardMedia>
-                    <CardTitle title={ node._id } subtitle={ node._rev }/>
-                    <CardText>
-                        {/*<div id={ 'content' }>{ node.text } </div>*/}
-                        {/*<ReactQuill value={ node.text }/>*/}
-                        { node.text }
-                    </CardText>
-                    <CardActions>
-                        <FlatButton onClick={ this.handleDelete.bind( this ) }> delete </FlatButton>
-                    </CardActions>
-                </Card>
-            </div>
-
-        )
-    }
-}
+import Meta from './Meta';
 
 const iconButtonElement = (
     <IconButton
@@ -116,9 +66,9 @@ class Item extends Component {
         return (
             <div>
                 <ListItem onClick={ this.handleClick.bind( this ) }
-                          leftAvatar={ <Avatar src="http://lorempixel.com/600/337/nature/" /> }
+                          leftAvatar={ <Avatar src="http://placehold.it/50x50.jpg/000" /> }
                           rightIconButton={
-                    <IconMenu iconButtonElement={iconButtonElement}>
+                    <IconMenu iconButtonElement={ iconButtonElement }>
                         <MenuItem onClick={ this.handleDelete.bind( this ) }>Delete</MenuItem>
                     </IconMenu>
                 }
@@ -126,7 +76,6 @@ class Item extends Component {
                           secondaryText={
                     <p>
                         <span style={{color: Colors.darkBlack}}>{ ( 1001 + index ).toString().substring( 1 ) } | { node._id } | { node._rev }</span><br/>
-                        I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
                     </p>
                 }
                           secondaryTextLines={ 2 }
@@ -138,16 +87,18 @@ class Item extends Component {
     }
 }
 
-class ListView extends Component {
+export default class Nodes extends Component {
     constructor( props ) {
         super( props );
-        this.state = { selection: undefined };
         this.handleClick = this.handleClick.bind( this );
     }
 
     handleClick( node ) {
-        console.log( 'ListView:handleClick(', node._id, ')' );
-        this.setState( { selection: node } );
+        console.log( 'Nodes:handleClick(', node._id, ')' );
+        //this.setState( { selection: node } );
+        //this.context.router.transitionTo( '/node/' + node._id );
+        browserHistory.push( '/node/' + node._id );
+
     }
 
     handleDelete( nodeId, event ) {
@@ -161,25 +112,18 @@ class ListView extends Component {
 
         return (
             <div style={ {  width: '100%' } }>
-                <View auto row>
-                    <View column width="30%">
-                        <List>
-                            { nodes.map( ( node, index ) =>
-                                <Item handleClick={ this.handleClick } key={ node._id } index={ index }
-                                      node={ node } { ...actions }/>
-                            ) }
-                        </List>
-                    </View>
-                    <View column>
-                        { this.props.children }
-                    </View>
-                </View>
+                <List>
+                    { nodes.map( ( node, index ) =>
+                        <Item handleClick={ this.handleClick } key={ node._id } index={ index }
+                              node={ node } { ...actions }/>
+                    ) }
+                </List>
             </div>
         );
     }
 }
 
-ListView.propTypes = {
+Nodes.propTypes = {
     nodes: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
@@ -200,4 +144,4 @@ function mapDispatchToProps( dispatch ) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)( ListView )
+)( Nodes )

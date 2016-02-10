@@ -2,16 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 
+import View from 'react-flexbox';
+
+import Nodes from './containers/Nodes';
+
+import AppBar from 'material-ui/lib/app-bar';
+import IconButton from 'material-ui/lib/icon-button';
+import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import FlatButton from 'material-ui/lib/flat-button';
+
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import DevTools from './containers/DevTools';
-import TableView from './containers/TableView';
-import ListView from './containers/ListView';
-import GridView from './containers/GridView';
 
 import * as NodesActions from './data/actions/nodes'
 
@@ -27,10 +31,10 @@ class Node extends Component {
         return (
             <li>
                 <span>{ ( 1001 + index ).toString().substring( 1 ) }</span>
-                <span>{ node.text }</span>
-                <span>{ node._id }</span>
-                <span>{ node._rev }</span>
-                <span><button onClick={ this.handleClick.bind( this ) }> x</button></span>
+                <span> | { node.text }</span>
+                <span> | { node._id }</span>
+                <span> | { node._rev }</span>
+                <span> <button onClick={ this.handleClick.bind( this ) }> x</button></span>
             </li>
         )
     }
@@ -52,29 +56,37 @@ class App extends Component {
         } )
     }
 
+    handleTouchTap() {
+        alert( 'onTouchTap triggered on the title component' );
+    }
+
     render() {
         const { nodes, actions, syncState } = this.props;
 
         return (
             <div>
-                <h1>Meta</h1>
-                <h2>{ syncState.text }</h2>
-                <RaisedButton primary={ true } onClick={ this.handleClick.bind( this ) } label='Add'/>
-                &nbsp;
-                <FlatButton onClick={ this.handlePurge.bind( this ) }>Purge</FlatButton>
+                <AppBar
+                    title='Meta'
+                    onTitleTouchTap={ this.handleTouchTap.bind( this ) }
+                    iconElementLeft={
+                    <div>
+                        <RaisedButton primary={ true } onClick={ this.handleClick.bind( this ) } label='Add'/>
+                        <FlatButton onClick={ this.handlePurge.bind( this ) }>Purge</FlatButton>
+                    </div>
+                    }
+                />
 
-                { /*< TableView/> */ }
+                <span>{ syncState.text }</span>
 
-                 { /* <GridView /> */ }
+                <View auto row>
+                    <View column width="30%">
+                        <Nodes />
+                    </View>
 
-                <ListView />
-
-                { /*
-                <ul>
-                    { nodes.map( ( node, index ) =>
-                        <Node key={ node._id } index={ index } node={ node } { ...actions }/>
-                    ) }
-                </ul> */ }
+                    <View column>
+                        { this.props.children }
+                    </View>
+                </View>
 
                 <DevTools/>
             </div>
