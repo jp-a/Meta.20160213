@@ -79,11 +79,11 @@ class App extends Component {
                 <span>{ syncState.text }</span>
 
                 <View auto row>
-                    <View column width="30%">
+                    <View column width='30%'>
                         <Nodes />
                     </View>
 
-                    <View column>
+                    <View column width='60%'>
                         { this.props.children }
                     </View>
                 </View>

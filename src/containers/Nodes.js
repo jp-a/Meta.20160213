@@ -64,7 +64,7 @@ class Item extends Component {
         return (
             <div>
                 <ListItem onClick={ this.handleClick.bind( this ) }
-                          leftAvatar={ <Avatar src="http://placehold.it/50x50.jpg/000" /> }
+                          leftAvatar={ <Avatar src={ node.text } /> }
                           rightIconButton={
                     <IconMenu iconButtonElement={ iconButtonElement }>
                         <MenuItem onClick={ this.handleDelete.bind( this ) }>Delete</MenuItem>
